@@ -54,7 +54,7 @@ class IPythonNotebookXBlock(XBlock):
             student_id = self.runtime.anonymous_student_id
         except AttributeError:
             # This a displayed in the studio
-            student_id = "AnonymousStudentID"
+            student_id = "TestingAccount"
 
         course_id = self.location.course
 
