@@ -50,11 +50,8 @@ class IPythonNotebookXBlock(XBlock):
         when viewing courses.
         """
 
-        try:
-            student_id = self.runtime.anonymous_student_id
-        except AttributeError:
-            # This a displayed in the studio
-            student_id = "TestingAccount"
+        student_id = self.xmodule_runtime.anonymous_student_id
+        # student_id will be "student" if called from the Studio
 
         course_id = self.location.course
 
