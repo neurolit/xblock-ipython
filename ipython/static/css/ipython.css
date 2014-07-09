@@ -1,0 +1,9 @@
+/* CSS for IPythonNotebookXBlock */
+
+.ipython_block .count {
+    font-weight: bold;
+}
+
+.ipython_block p {
+    cursor: pointer;
+}
