@@ -5,14 +5,21 @@
   <ul class="list-input settings-list">
       <li class="field comp-setting-entry is-set">
           <div class="wrapper-comp-setting">
-            <label class="label setting-label" for="edit_ipython_server_url">{% trans "IPython server URL" %}</label>
+            <label class="label setting-label" for="ipython_server_url">{% trans "IPython server URL" %}</label>
             <input class="input setting-input" id="ipython_server_url" value="{{ self.ipython_server_url }}" type="text">
           </div>
           <span class="tip setting-help">{% trans "iPython server URL" %}</span>
       </li>
       <li class="field comp-setting-entry is-set">
           <div class="wrapper-comp-setting">
-            <label class="label setting-label" for="notebook_id">{% trans "The ID of the IPython notebook"%}</label>
+            <label class="label setting-label" for="course_id">{% trans "IPython course ID" %}</label>
+            <input class="input setting-input" id="course_id" value="{{ self.course_id }}" type="text">
+          </div>
+          <span class="tip setting-help">{% trans "iPython course ID" %}</span>
+      </li>
+      <li class="field comp-setting-entry is-set">
+          <div class="wrapper-comp-setting">
+            <label class="label setting-label" for="notebook_id">{% trans "IPython notebook ID"%}</label>
             <input class="input setting-input" id="notebook_id" value="{{self.notebook_id}}" type="text">
           </div>
           <span class="tip setting-help">{% trans "The ID of the IPython notebook" %}</span>

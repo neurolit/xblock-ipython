@@ -19,7 +19,7 @@ class IPythonNotebookXBlock(XBlock):
     XBlock displaying an iPython Notebook link
     """
 
-    # Fields are defined on the class.  You can access them in your code as
+    # Fields are defined on the class. You can access them in your code as
     # self.<fieldname>.
 
     # URL format :
@@ -28,13 +28,20 @@ class IPythonNotebookXBlock(XBlock):
     ipython_server_url = String(
         help=_("The URL IPython server"),
         display_name=_("IPython server URL"),
-        default="https://connect.inria.fr",
+        default="https://connect.inria.fr/ipythonExercice",
+        scope=Scope.settings
+    )
+
+    course_id = String(
+        help=_("The ID of the course"),
+        display_name=_("IPython Course ID"),
+        default="",
         scope=Scope.settings
     )
 
     notebook_id = String(
         help=_("The ID of the IPython notebook"),
-        display_name=_("Notebook ID"),
+        display_name=_("IPython Notebook ID"),
         default="",
         scope=Scope.settings
     )
@@ -53,11 +60,12 @@ class IPythonNotebookXBlock(XBlock):
         student_id = self.xmodule_runtime.anonymous_student_id
         # student_id will be "student" if called from the Studio
 
-        course_id = self.location.course
-
         context = {
             'self': self,
-            'notebook_url': self.ipython_server_url + "/ipythonExercice/" + course_id + "/" + self.notebook_id + ".ipynb/" + student_id
+            'notebook_url': "{0}/{1}/{2}.ipynb/{3}".format(self.ipython_server_url,
+                                                           self.course_id,
+                                                           self.notebook_id,
+                                                           student_id)
         }
 
         frag = Fragment()
@@ -74,6 +82,9 @@ class IPythonNotebookXBlock(XBlock):
         context = {
             'self': self
         }
+
+        if self.course_id == "":
+            self.course_id = self.location.course
 
         frag = Fragment()
         frag.add_content(render_template('/templates/html/ipython-studio.html', context))
@@ -98,6 +109,10 @@ class IPythonNotebookXBlock(XBlock):
             log.info(u'Received submissions: {}'.format(submissions))
             self.notebook_id = submissions['notebook_id']
             self.ipython_server_url = submissions['ipython_server_url']
+            if submissions['course_id'] == '':
+                self.course_id = self.location.course
+            else:
+                self.course_id = submissions['course_id']
             response = {
                 'result': 'success',
             }
