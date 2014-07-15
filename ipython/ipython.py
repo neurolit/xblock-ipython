@@ -65,7 +65,8 @@ class IPythonNotebookXBlock(XBlock):
             'notebook_url': "{0}/{1}/{2}.ipynb/{3}".format(self.ipython_server_url,
                                                            self.course_id,
                                                            self.notebook_id,
-                                                           student_id)
+                                                           student_id),
+            'is_in_studio': student_id == 'student'
         }
 
         frag = Fragment()

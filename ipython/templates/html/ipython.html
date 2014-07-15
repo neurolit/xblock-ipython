@@ -1,5 +1,6 @@
 <div class="ipython_block">
-<p>Link : {{notebook_url}}
-</p>
+{% if is_in_studio %}
+<p>Notebook URL: <a href="{{notebook_url}}">{{notebook_url}}</a></p>
+{% endif %}
 <iframe width="680px" height="500px" src="{{notebook_url}}"></iframe>
 </div>
