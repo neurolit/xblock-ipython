@@ -19,4 +19,20 @@ function IPythonNotebookXBlock(runtime, element) {
         runtime.notify('cancel', {});
     });
 
+    var update_url = function() {
+        var url = $('input[id=ipython_server_url]').val() + '/' +
+                  $('input[id=course_id]').val() + '/' +
+                  $('input[id=notebook_id]').val() + '.ipynb/student';
+        $('a#notebook_url').html(url).attr('href', url);
+    }
+
+    $('#settings-tab input').on('input', function(){
+        update_url();
+    });
+
+    $(function ($) {
+        /* Here's where you'd do things on page load. */
+        update_url();
+    });
+
 }
