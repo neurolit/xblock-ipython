@@ -51,6 +51,17 @@ class IPythonNotebookXBlock(XBlock):
         data = pkg_resources.resource_string(__name__, path)
         return data.decode("utf8")
 
+    def enriched_fields_list(self, fields=[]):
+        """Handy helper for getting a dictionary of fields"""
+        fields_list = []
+        for field in fields:
+            fields_list.append(
+                {   'name': field,
+                    'value': getattr(self, field),
+                    'help': getattr(self.__class__, field).help,
+                    'display_name': getattr(self.__class__, field).display_name })
+        return fields_list
+
     def student_view(self, context=None):
         """
         The primary view of the IPythonNotebookXBlock, shown to students
@@ -87,20 +98,7 @@ class IPythonNotebookXBlock(XBlock):
 
         context = {
             'self': self,
-            'fields': [
-                {   'name': "ipython_server_url",
-                    'value': self.ipython_server_url,
-                    'help': self.__class__.ipython_server_url.help,
-                    'display_name': self.__class__.ipython_server_url.display_name },
-                {   'name': "course_id",
-                    'value': self.course_id,
-                    'help': self.__class__.course_id.help,
-                    'display_name': self.__class__.course_id.display_name },
-                {   'name': "notebook_id",
-                    'value': self.notebook_id,
-                    'help': self.__class__.notebook_id.help,
-                    'display_name': self.__class__.notebook_id.display_name }
-            ]
+            'fields': self.enriched_fields_list([ "ipython_server_url", "course_id", "notebook_id" ])
         }
 
         frag = Fragment()
