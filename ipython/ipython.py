@@ -81,12 +81,27 @@ class IPythonNotebookXBlock(XBlock):
         """
         The studio view of the IPythonNotebookXBlock, with form
         """
-        context = {
-            'self': self
-        }
 
         if self.course_id == "":
             self.course_id = self.location.course
+
+        context = {
+            'self': self,
+            'fields': [
+                {   'name': "ipython_server_url",
+                    'value': self.ipython_server_url,
+                    'help': self.__class__.ipython_server_url.help,
+                    'display_name': self.__class__.ipython_server_url.display_name },
+                {   'name': "course_id",
+                    'value': self.course_id,
+                    'help': self.__class__.course_id.help,
+                    'display_name': self.__class__.course_id.display_name },
+                {   'name': "notebook_id",
+                    'value': self.notebook_id,
+                    'help': self.__class__.notebook_id.help,
+                    'display_name': self.__class__.notebook_id.display_name }
+            ]
+        }
 
         frag = Fragment()
         frag.add_content(render_template('/templates/html/ipython-studio.html', context))
