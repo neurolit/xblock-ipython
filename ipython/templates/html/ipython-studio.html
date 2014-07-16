@@ -3,27 +3,15 @@
 <div class="wrapper-comp-settings is-active editor-with-buttons" id="settings-tab">
   <script id="metadata-editor-tpl" type="text/template">// JS crashes when empty //</script>
   <ul class="list-input settings-list">
+      {% for field in fields %}
       <li class="field comp-setting-entry is-set">
           <div class="wrapper-comp-setting">
-            <label class="label setting-label" for="ipython_server_url">{% trans "IPython server URL" %}</label>
-            <input class="input setting-input" id="ipython_server_url" value="{{ self.ipython_server_url }}" type="text">
+            <label class="label setting-label" for="{{ field.name }}">{{ field.display_name }}</label>
+            <input class="input setting-input" id="{{ field.name }}" value="{{ field.value }}" type="text">
           </div>
-          <span class="tip setting-help">{% trans "iPython server URL" %}</span>
+          <span class="tip setting-help">{{ field.help }}</span>
       </li>
-      <li class="field comp-setting-entry is-set">
-          <div class="wrapper-comp-setting">
-            <label class="label setting-label" for="course_id">{% trans "IPython course ID" %}</label>
-            <input class="input setting-input" id="course_id" value="{{ self.course_id }}" type="text">
-          </div>
-          <span class="tip setting-help">{% trans "iPython course ID" %}</span>
-      </li>
-      <li class="field comp-setting-entry is-set">
-          <div class="wrapper-comp-setting">
-            <label class="label setting-label" for="notebook_id">{% trans "IPython notebook ID"%}</label>
-            <input class="input setting-input" id="notebook_id" value="{{self.notebook_id}}" type="text">
-          </div>
-          <span class="tip setting-help">{% trans "The ID of the IPython notebook" %}</span>
-      </li>
+      {% endfor %}
   </ul>
   <div class="xblock-actions">
     <span class="xblock-editor-error-message"></span>

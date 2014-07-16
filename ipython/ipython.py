@@ -9,7 +9,7 @@ from xblock.fragment import Fragment
 from django.utils.translation import ugettext as _
 from django.template import Context, Template
 
-from .utils import render_template
+from .utils import render_template, xblock_field_list
 
 import logging
 log = logging.getLogger(__name__)
@@ -81,12 +81,14 @@ class IPythonNotebookXBlock(XBlock):
         """
         The studio view of the IPythonNotebookXBlock, with form
         """
-        context = {
-            'self': self
-        }
 
         if self.course_id == "":
             self.course_id = self.location.course
+
+        context = {
+            'self': self,
+            'fields': xblock_field_list(self, [ "ipython_server_url", "course_id", "notebook_id" ])
+        }
 
         frag = Fragment()
         frag.add_content(render_template('/templates/html/ipython-studio.html', context))
