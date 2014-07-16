@@ -21,6 +21,8 @@ function IPythonNotebookXBlock(runtime, element) {
 
     $(function ($) {
         /* Here's where you'd do things on page load. */
-        $('iframe.notebook').iFrameResize({log:true});
+        $('iframe.notebook').iFrameResize({ log:true,
+                                            heightCalculationMethod: "lowestElement",
+                                            checkOrigin: false});
     });
 }
