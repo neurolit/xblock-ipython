@@ -92,7 +92,6 @@ class IPythonNotebookXBlock(XBlock):
 
         frag = Fragment()
         frag.add_content(render_template('/templates/html/ipython-edit.html', context))
-        frag.add_css(self.resource_string("static/css/ipython.css"))
         frag.add_javascript(self.resource_string("static/js/src/ipython-edit.js"))
         frag.initialize_js('IPythonNotebookXBlock')
         return frag
