@@ -9,7 +9,7 @@ from xblock.fragment import Fragment
 from django.utils.translation import ugettext as _
 from django.template import Context, Template
 
-from .utils import render_template
+from .utils import render_template, xblock_field_list
 
 import logging
 log = logging.getLogger(__name__)
@@ -51,17 +51,6 @@ class IPythonNotebookXBlock(XBlock):
         data = pkg_resources.resource_string(__name__, path)
         return data.decode("utf8")
 
-    def enriched_fields_list(self, fields=[]):
-        """Handy helper for getting a dictionary of fields"""
-        fields_list = []
-        for field in fields:
-            fields_list.append(
-                {   'name': field,
-                    'value': getattr(self, field),
-                    'help': getattr(self.__class__, field).help,
-                    'display_name': getattr(self.__class__, field).display_name })
-        return fields_list
-
     def student_view(self, context=None):
         """
         The primary view of the IPythonNotebookXBlock, shown to students
@@ -98,7 +87,7 @@ class IPythonNotebookXBlock(XBlock):
 
         context = {
             'self': self,
-            'fields': self.enriched_fields_list([ "ipython_server_url", "course_id", "notebook_id" ])
+            'fields': xblock_field_list(self, [ "ipython_server_url", "course_id", "notebook_id" ])
         }
 
         frag = Fragment()
