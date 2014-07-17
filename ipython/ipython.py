@@ -26,22 +26,22 @@ class IPythonNotebookXBlock(XBlock):
     # https://connect.inria.fr/ipythonExercice/CourseID/NotebookID.ipynb/UserID
 
     ipython_server_url = String(
-        help=_("The URL IPython server"),
-        display_name=_("IPython server URL"),
+        display_name=_("Server URL"),
+        help=_("The URL of the IPython server. Don't forget the leading protocol (http:// or https://) and the path, without a trailing slash. https://yourserver.com/yourpath is correct, for example."),
         default="https://connect.inria.fr/ipythonExercice",
         scope=Scope.settings
     )
 
     course_id = String(
-        help=_("The ID of the course"),
-        display_name=_("IPython Course ID"),
+        display_name=_("Course ID"),
+        help=_("The ID of the course in IPython"),
         default="",
         scope=Scope.settings
     )
 
     notebook_id = String(
-        help=_("The ID of the IPython notebook"),
-        display_name=_("IPython Notebook ID"),
+        display_name=_("Notebook ID"),
+        help=_("The ID of the IPython notebook, without the trailing .ipynb"),
         default="",
         scope=Scope.settings
     )
