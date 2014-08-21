@@ -25,6 +25,13 @@ class IPythonNotebookXBlock(XBlock):
     # URL format :
     # https://connect.inria.fr/ipythonExercice/CourseID/NotebookID.ipynb/UserID
 
+    display_name = String(
+        help=_("The name students see. This name appears in the course ribbon and as a header for the video."),
+        display_name=_("Component Display Name"),
+        default=_("New ipython notebook"),
+        scope=Scope.settings
+    )
+
     ipython_server_url = String(
         display_name=_("Server URL"),
         help=_("The URL of the IPython server. Don't forget the leading protocol (http:// or https://) and the path, without a trailing slash. https://yourserver.com/yourpath is correct, for example."),
