@@ -21,13 +21,23 @@ function IPythonNotebookXBlock(runtime, element) {
     });
 
     var update_url = function() {
-        var url = $('input[id=ipython_server_url]').val() + '/' +
+        var url ;
+        if ($('input[id=is_notebook_static]').is(":checked")) {
+            url = $('input[id=ipython_server_url]').val() + '/ipythonStaticNotebook/' +
+                  $('input[id=course_id]').val() + '/' +
+                  $('input[id=notebook_id]').val() + '.ipynb';
+        } else {
+            url = $('input[id=ipython_server_url]').val() + '/ipythonExercice/' +
                   $('input[id=course_id]').val() + '/' +
                   $('input[id=notebook_id]').val() + '.ipynb/student';
+        }
         $('a#notebook_url').html(url).attr('href', url);
     }
 
     $('#settings-tab input').on('input', function(){
+        update_url();
+    });
+    $('#settings-tab input#is_notebook_static').on('change', function(){
         update_url();
     });
 

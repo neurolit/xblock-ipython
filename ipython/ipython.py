@@ -74,12 +74,19 @@ class IPythonNotebookXBlock(XBlock):
         student_id = self.xmodule_runtime.anonymous_student_id
         # student_id will be "student" if called from the Studio
 
+        if self.is_notebook_static:
+            notebook_url = "{0}/ipythonStaticNotebook/{1}/{2}.ipynb".format(self.ipython_server_url,
+                                                                            self.course_id,
+                                                                            self.notebook_id)
+        else:
+            notebook_url = "{0}/ipythonExercice/{1}/{2}.ipynb/{3}".format(self.ipython_server_url,
+                                                                          self.course_id,
+                                                                          self.notebook_id,
+                                                                          student_id)
+
         context = {
             'self': self,
-            'notebook_url': "{0}/{1}/{2}.ipynb/{3}".format(self.ipython_server_url,
-                                                           self.course_id,
-                                                           self.notebook_id,
-                                                           student_id),
+            'notebook_url': notebook_url,
             'is_in_studio': student_id == 'student'
         }
 
