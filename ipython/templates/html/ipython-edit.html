@@ -7,7 +7,11 @@
       <li class="field comp-setting-entry is-set">
           <div class="wrapper-comp-setting">
             <label class="label setting-label" for="{{ field.name }}">{{ field.display_name }}</label>
+            {% if field.type == "String" %}
             <input class="input setting-input" id="{{ field.name }}" value="{{ field.value }}" type="text">
+            {% elif field.type == "Boolean" %}
+            BOOLEAN = {{ field.value }}
+            {% endif %}
           </div>
           <span class="tip setting-help">{{ field.help }}</span>
       </li>

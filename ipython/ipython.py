@@ -3,7 +3,7 @@
 import pkg_resources
 
 from xblock.core import XBlock
-from xblock.fields import Scope, Integer, String
+from xblock.fields import Scope, Integer, String, Boolean
 from xblock.fragment import Fragment
 
 from django.utils.translation import ugettext as _
@@ -53,6 +53,13 @@ class IPythonNotebookXBlock(XBlock):
         scope=Scope.settings
     )
 
+    is_notebook_static = Boolean(
+        help=_("A static notebook won't be edited by students."),
+        display_name=_("Static notebook"),
+        default=False,
+        scope=Scope.settings
+    )
+
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
         data = pkg_resources.resource_string(__name__, path)
@@ -94,7 +101,7 @@ class IPythonNotebookXBlock(XBlock):
 
         context = {
             'self': self,
-            'fields': xblock_field_list(self, [ "ipython_server_url", "course_id", "notebook_id" ])
+            'fields': xblock_field_list(self, [ "ipython_server_url", "course_id", "notebook_id", "is_notebook_static" ])
         }
 
         frag = Fragment()
