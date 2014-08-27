@@ -126,6 +126,7 @@ class IPythonNotebookXBlock(XBlock):
             log.info(u'Received submissions: {}'.format(submissions))
             self.notebook_id = submissions['notebook_id']
             self.ipython_server_url = submissions['ipython_server_url']
+            self.is_notebook_static = submissions['is_notebook_static']
             if submissions['course_id'] == '':
                 self.course_id = self.location.course
             else:

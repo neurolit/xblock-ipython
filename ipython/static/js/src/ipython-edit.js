@@ -7,7 +7,8 @@ function IPythonNotebookXBlock(runtime, element) {
         var data = {
             'ipython_server_url': $('#ipython_server_url').val(),
             'notebook_id': $('#notebook_id').val(),
-            'course_id': $('#course_id').val()
+            'course_id': $('#course_id').val(),
+            'is_notebook_static': $('#is_notebook_static').is(':checked')
         };
 
         $.post(handlerUrl, JSON.stringify(data)).complete(function() {
