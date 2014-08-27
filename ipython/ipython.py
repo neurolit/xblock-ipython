@@ -34,8 +34,8 @@ class IPythonNotebookXBlock(XBlock):
 
     ipython_server_url = String(
         display_name=_("Server URL"),
-        help=_("The URL of the IPython server. Don't forget the leading protocol (http:// or https://) and the path, without a trailing slash. https://yourserver.com/yourpath is correct, for example."),
-        default="https://connect.inria.fr/ipythonExercice",
+        help=_("The URL of the IPython server. Don't forget the leading protocol (http:// or https://) and the path, without a trailing slash. https://yourserver.com is correct, for example."),
+        default="https://connect.inria.fr",
         scope=Scope.settings
     )
 
