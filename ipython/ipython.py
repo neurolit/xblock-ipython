@@ -3,7 +3,7 @@
 import pkg_resources
 
 from xblock.core import XBlock
-from xblock.fields import Scope, Integer, String
+from xblock.fields import Scope, Integer, String, Boolean
 from xblock.fragment import Fragment
 
 from django.utils.translation import ugettext as _
@@ -34,8 +34,8 @@ class IPythonNotebookXBlock(XBlock):
 
     ipython_server_url = String(
         display_name=_("Server URL"),
-        help=_("The URL of the IPython server. Don't forget the leading protocol (http:// or https://) and the path, without a trailing slash. https://yourserver.com/yourpath is correct, for example."),
-        default="https://connect.inria.fr/ipythonExercice",
+        help=_("The URL of the IPython server. Don't forget the leading protocol (http:// or https://) and the path, without a trailing slash. https://yourserver.com is correct, for example."),
+        default="https://connect.inria.fr",
         scope=Scope.settings
     )
 
@@ -53,6 +53,13 @@ class IPythonNotebookXBlock(XBlock):
         scope=Scope.settings
     )
 
+    is_notebook_static = Boolean(
+        help=_("A static notebook won't be edited by students."),
+        display_name=_("Static notebook"),
+        default=False,
+        scope=Scope.settings
+    )
+
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
         data = pkg_resources.resource_string(__name__, path)
@@ -67,12 +74,19 @@ class IPythonNotebookXBlock(XBlock):
         student_id = self.xmodule_runtime.anonymous_student_id
         # student_id will be "student" if called from the Studio
 
+        if self.is_notebook_static:
+            notebook_url = "{0}/ipythonStaticNotebook/{1}/{2}.ipynb".format(self.ipython_server_url,
+                                                                            self.course_id,
+                                                                            self.notebook_id)
+        else:
+            notebook_url = "{0}/ipythonExercice/{1}/{2}.ipynb/{3}".format(self.ipython_server_url,
+                                                                          self.course_id,
+                                                                          self.notebook_id,
+                                                                          student_id)
+
         context = {
             'self': self,
-            'notebook_url': "{0}/{1}/{2}.ipynb/{3}".format(self.ipython_server_url,
-                                                           self.course_id,
-                                                           self.notebook_id,
-                                                           student_id),
+            'notebook_url': notebook_url,
             'is_in_studio': student_id == 'student'
         }
 
@@ -94,7 +108,7 @@ class IPythonNotebookXBlock(XBlock):
 
         context = {
             'self': self,
-            'fields': xblock_field_list(self, [ "ipython_server_url", "course_id", "notebook_id" ])
+            'fields': xblock_field_list(self, [ "ipython_server_url", "course_id", "notebook_id", "is_notebook_static" ])
         }
 
         frag = Fragment()
@@ -119,6 +133,7 @@ class IPythonNotebookXBlock(XBlock):
             log.info(u'Received submissions: {}'.format(submissions))
             self.notebook_id = submissions['notebook_id']
             self.ipython_server_url = submissions['ipython_server_url']
+            self.is_notebook_static = submissions['is_notebook_static']
             if submissions['course_id'] == '':
                 self.course_id = self.location.course
             else:

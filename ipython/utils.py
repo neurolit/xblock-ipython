@@ -40,5 +40,6 @@ def xblock_field_list(xblock, field_names=[]):
             {   'name': field,
                 'value': getattr(xblock, field),
                 'help': getattr(xblock.__class__, field).help,
-                'display_name': getattr(xblock.__class__, field).display_name })
+                'display_name': getattr(xblock.__class__, field).display_name,
+                'type': type(getattr(xblock.__class__, field)).__name__ })
     return field_list
