@@ -23,7 +23,7 @@ class IPythonNotebookXBlock(XBlock):
     # self.<fieldname>.
 
     # URL format :
-    # https://connect.inria.fr/ipythonExercice/CourseID/NotebookID.ipynb/UserID
+    # https://course-41001.france-universite-numerique-mooc.fr/ipythonExercice/CourseID/NotebookID.ipynb/UserID
 
     display_name = String(
         help=_("The name students see. This name appears in the course ribbon and as a header for the video."),
@@ -35,7 +35,7 @@ class IPythonNotebookXBlock(XBlock):
     ipython_server_url = String(
         display_name=_("Server URL"),
         help=_("The URL of the IPython server. Don't forget the leading protocol (http:// or https://) and the path, without a trailing slash. https://yourserver.com is correct, for example."),
-        default="https://connect.inria.fr",
+        default="https://course-41001.france-universite-numerique-mooc.fr",
         scope=Scope.settings
     )
 
