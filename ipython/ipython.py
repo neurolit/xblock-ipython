@@ -29,7 +29,7 @@ class IPythonNotebookXBlock(XBlock):
         help=_("The name students see. This name appears in the course ribbon and as a header for the video."),
         display_name=_("Component Display Name"),
         default=_("New ipython notebook"),
-        scope=Scope.settings
+        scope=Scope.user_state
     )
 
     ipython_server_url = String(
@@ -83,6 +83,8 @@ class IPythonNotebookXBlock(XBlock):
                                                                           self.course_id,
                                                                           self.notebook_id,
                                                                           student_id)
+
+        self.display_name = self.notebook_id
 
         context = {
             'self': self,
